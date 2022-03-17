@@ -2,14 +2,14 @@
 
 ## URI
 ```
-POST /money
+POST /transaction
 ```
 
 ## Parameter
 | Name      | Type  | Description | Required |
 | --------- | :---: | :---------: | -------: |
-| from_user | User  |  주는 유저  |     True |
-| to_user   | User  |  받는 유저  |     True |
+| from_user | int  |  주는 유저 id |     True |
+| to_user   | int  |  받는 유저 id |     True |
 | money     |  int  |  보낼 금액  |     True |
 
 ## Response
