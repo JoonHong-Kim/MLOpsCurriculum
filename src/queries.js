@@ -3,9 +3,9 @@ require("dotenv").config();
 const Pool = require("pg").Pool;
 const pool = new Pool({
   user: process.env.DB_USER,
-  host: "localhost",
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
+  host: "host.docker.internal",
   port: process.env.DB_PORT,
 });
 
@@ -30,11 +30,10 @@ const getUserById = (request, response) => {
 };
 
 const createUser = (request, response) => {
-  const { id, name, age } = request.body;
-
+  const { name, age } = request.body;
   pool.query(
-    "INSERT INTO users (id, name, age) VALUES ($1, $2, $3)",
-    [id, name, age],
+    "INSERT INTO users ( name, age) VALUES ( $1, $2)",
+    [name, age],
     (error, results) => {
       if (error) {
         throw error;
@@ -47,7 +46,6 @@ const createUser = (request, response) => {
 const updateUser = (request, response) => {
   const id = parseInt(request.params.id);
   const { name, age } = request.body;
-  console.log(name,age,id)
   pool.query(
     "UPDATE users SET name = $1, age = $2 WHERE id = $3",
     [name, age, id],

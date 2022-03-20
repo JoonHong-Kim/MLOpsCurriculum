@@ -1,9 +1,10 @@
 const express = require("express");
 const app = express();
 const db = require("./queries");
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
-
+app.use(express.urlencoded());
+app.use(express.json());
 
 app.get("/", (request, response) => {
   response.json({ info: "Node.js, Express, and Postgres API" });
