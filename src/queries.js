@@ -5,10 +5,31 @@ const pool = new Pool({
   user: process.env.DB_USER,
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
-  host: "host.docker.internal",
+  host: process.env.DB_HOST,
   port: process.env.DB_PORT,
 });
+const execute = async (query) => {
+  try {
+      await pool.connect();     // gets connection
+      await pool.query(query);  // sends queries
+      return true;
+  } catch (error) {
+      console.error(error.stack);
+      return false;
+  } 
+};
+const text = `
+    CREATE TABLE IF NOT EXISTS users (
+	    id serial PRIMARY KEY,
+	    name VARCHAR(100) NOT NULL,
+	    age int NOT NULL
+    );`;
 
+execute(text).then(result => {
+    if (result) {
+        console.log('Table created');
+    }
+});
 const getUsers = (request, response) => {
   pool.query("SELECT * FROM users ORDER BY id ASC", (error, results) => {
     if (error) {
