@@ -2,21 +2,21 @@ require("dotenv").config();
 
 const Pool = require("pg").Pool;
 const pool = new Pool({
-  user: process.env.DB_USER,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
+  user: process.env.DB_USER || "jhkim",
+  database: process.env.DB_NAME || "users",
+  password: process.env.DB_PASSWORD || "postgres",
+  host: process.env.DB_HOST || "localhost",
+  port: process.env.DB_PORT || 5432,
 });
 const execute = async (query) => {
   try {
-      await pool.connect();     // gets connection
-      await pool.query(query);  // sends queries
-      return true;
+    await pool.connect(); // gets connection
+    await pool.query(query); // sends queries
+    return true;
   } catch (error) {
-      console.error(error.stack);
-      return false;
-  } 
+    console.error(error.stack);
+    return false;
+  }
 };
 const text = `
     CREATE TABLE IF NOT EXISTS users (
@@ -25,10 +25,10 @@ const text = `
 	    age int NOT NULL
     );`;
 
-execute(text).then(result => {
-    if (result) {
-        console.log('Table created');
-    }
+execute(text).then((result) => {
+  if (result) {
+    console.log("Table created");
+  }
 });
 const getUsers = (request, response) => {
   pool.query("SELECT * FROM users ORDER BY id ASC", (error, results) => {
@@ -59,7 +59,9 @@ const createUser = (request, response) => {
       if (error) {
         throw error;
       }
-      response.status(201).send(`User added with ID: ${results.insertId}`);
+      response
+        .status(201)
+        .send(`User added with success! name: ${name}, age: ${age}`);
     }
   );
 };
