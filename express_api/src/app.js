@@ -1,43 +1,20 @@
 const express = require("express");
 const app = express();
-const userApi = require("./model/userRepository");
-const port = process.env.PORT||3000;
-const user = new userApi.UserRepository();
+const user = require("./routes/userRoutes");
+const port = process.env.PORT || 3000;
 app.use(express.urlencoded());
 app.use(express.json());
 
-app.get("/", (request, response) => {
-  response.json({ info: "Node.js, Express, and Postgres API" });
-});
+user(app);
 
-app.get("/user",async (req,res)=> {
-    const result=await user.getUsers();
-    res.status(200).json(result);
-});
-app.get("/user/:id", async (req,res)=>{
-    const id = parseInt(req.params.id);
-    const result = await user.getUserById(id);
-    res.status(200).json(result);
-});
-app.post("/user", async (req,res)=>{
-    const {name,age} = req.body;
-    const result = await user.createUser(name,age);
-    res.status(201).json(result);
-});
-app.put("/user/:id", async (req,res)=>{
-  const id = parseInt(req.params.id);
-    const {name,age} = req.body;
-    const result = await user.updateUser(id,name,age);
-    res.status(200).json(result);  
-});
-app.delete("/user/:id", async (req,res)=>{
-    const id = parseInt(req.params.id);
-    const result = await user.deleteUser(id);
-    res.status(200).json(result);
-});
-
+app.set("port", port);
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
 });
 
-module.exports={app};
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.status(err.status || 500).send(err.stack);
+});
+
+module.exports = { app };
