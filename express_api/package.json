@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node src/app.js"
+    "create-table": "node src/model/create_table.js",
+    "start": "npm run create-table && node src/app.js"
   },
   "keywords": [],
   "author": "",

@@ -1,10 +1,10 @@
 const userController = require("../model/userController");
 const user = new userController.UserRepository();
+
 module.exports = (app) => {
   app.get("/", (request, response) => {
     response.json({ info: "Node.js, Express, and Postgres API" });
   });
-
   app.get("/user", async (req, res) => {
     const result = await user.getUsers();
     res.status(200).json(result);
