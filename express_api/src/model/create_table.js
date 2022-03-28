@@ -1,4 +1,4 @@
-const { pool } = require("./db");
+const { pool } = require("./pool");
 
 const execute = async (query) => {
   try {
@@ -11,7 +11,7 @@ const execute = async (query) => {
   }
 };
 const text = `
-      CREATE TABLE IF NOT EXISTS users (
+      CREATE table IF NOT EXISTS users (
           id serial PRIMARY KEY,
           name VARCHAR(100) NOT NULL,
           age int NOT NULL
@@ -19,7 +19,7 @@ const text = `
 
 execute(text).then((result) => {
   if (result) {
-    console.log("Table created");
+    console.log("table created");
     process.exit(0);
   }
   else{

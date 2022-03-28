@@ -1,6 +1,6 @@
-const { pool } = require("./db");
+const { pool } = require("./pool");
 
-class UserRepository {
+class userRepository {
   constructor() {}
   async getUsers() {
     return new Promise((res, rej) => {
@@ -74,4 +74,4 @@ class UserRepository {
   }
 }
 
-module.exports = { UserRepository };
+module.exports = { userRepository };
