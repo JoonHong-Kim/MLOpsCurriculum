@@ -13,8 +13,8 @@ const execute = async (query) => {
 const text = `
       CREATE table IF NOT EXISTS users (
           id serial PRIMARY KEY,
-          name VARCHAR(100) NOT NULL,
-          age int NOT NULL
+          name VARCHAR(100) NOT NULL UNIQUE,
+          age int
       );`;
 
 execute(text).then((result) => {
