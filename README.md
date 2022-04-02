@@ -23,4 +23,4 @@
 - Phase 1 에서는 순서가 정말 좋았던것 같습니다.
 - MLOps Curriculum 이지만 모든 개발자에게 필수적으로 필요한 지식들이 많이 담겨있어 좋았습니다.
 - 다만 이런 리뷰를 메인 README.md 에 전부 적으면 phase 2 리뷰는 안보이지 않을까 하는 생각이 들었습니다.
-- 코드 리뷰로 개발은 어떻게 해야되는가? 에 많은 도움을 주신 코딩도사님 @hanchchch , 옆에서 머리 쥐어뜯고 있을때 슬쩍 많은 도움을 주신 @adldotori 님 감사합니다!
+- 코드 리뷰로 개발은 어떻게 해야되는가? 에 많은 도움을 주신 코딩도사님 [@hanchchch](https://github.com/hanchchch) , 옆에서 머리 쥐어뜯고 있을때 슬쩍 많은 도움을 주신 [@adldotori](https://github.com/adldotori) 님 감사합니다!
