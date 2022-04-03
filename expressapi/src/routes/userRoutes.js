@@ -13,11 +13,11 @@ module.exports = (app) => {
   app.get("/user/:id", async (req, res) => {
     const id = parseInt(req.params.id);
     if (isNaN(id)) {
-      res.status(400).json({ error: "Invalid user id" });
+      res.status(400).text("Invalid user id" );
     }
     const result = await user.getUserById(id);
     if (result.length === 0) {
-      res.status(404).json({ error: "The user not found" });
+      res.status(404).text("The user not found");
     }
     res.status(200).json(result);
   });
@@ -46,7 +46,7 @@ module.exports = (app) => {
   app.delete("/user/:id", async (req, res) => {
     const id = parseInt(req.params.id);
     if (isNaN(id)) {
-      res.status(400);
+      res.status(400).text("Invalid user id");
     }
     const result = await user.deleteUser(id);
     res.status(200).json(result);
