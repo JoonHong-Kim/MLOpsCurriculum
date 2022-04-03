@@ -3,7 +3,7 @@ const user = new userRepository();
 
 module.exports = (app) => {
   app.get("/", (request, response) => {
-    response.json({ info: "Node.js, Express, and Postgres API" });
+    response.json({ status: "OK" });
   });
   app.get("/user", async (req, res) => {
     const result = await user.getUsers();
@@ -13,9 +13,12 @@ module.exports = (app) => {
   app.get("/user/:id", async (req, res) => {
     const id = parseInt(req.params.id);
     if (isNaN(id)) {
-      res.status(400);
+      res.status(400).json({ error: "Invalid user id" });
     }
     const result = await user.getUserById(id);
+    if (result.length === 0) {
+      res.status(404).json({ error: "The user not found" });
+    }
     res.status(200).json(result);
   });
 
@@ -25,6 +28,7 @@ module.exports = (app) => {
       res.status(400);
     }
     const result = await user.createUser(name, age);
+    res.status(201).json({id:result["id"], name:name,age:age});
   });
   app.put("/user/:id", async (req, res) => {
     const id = parseInt(req.params.id);
@@ -36,8 +40,8 @@ module.exports = (app) => {
       res.status(400);
     }
     const result = await user.updateUser(id, name, age);
-    console.log(result)
-    res.status(200).json({"id":id, "name":name, "age":age});
+    console.log(result);
+    res.status(200).json({ id: id, name: name, age: age });
   });
   app.delete("/user/:id", async (req, res) => {
     const id = parseInt(req.params.id);
