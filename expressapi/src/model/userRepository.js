@@ -32,7 +32,7 @@ class userRepository {
   async createUser(name, age) {
     return new Promise((res, rej) => {
       pool.query(
-        "INSERT INTO users ( name, age) VALUES ( $1, $2) RETURNING id",
+        "INSERT INTO users ( name, age) VALUES ( $1, $2) RETURNING *",
         [name, age],
         (error, results) => {
           if (error) {

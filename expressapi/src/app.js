@@ -1,20 +1,16 @@
 const express = require("express");
-const app = express();
-const user = require("./routes/userRoutes");
+// const app = express();
+const makeApp = require("./routes/userRoutes");
+const { userRepository } = require("./model/userRepository");
+const user = new userRepository();
+
+const app = makeApp(user);
 const port = process.env.PORT || 3000;
-app.use(express.urlencoded());
-app.use(express.json());
-
-user(app);
-
 app.set("port", port);
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
 });
 
-app.use((err, req, res, next) => {
-  console.log(err);
-  res.status(err.status || 500).send(err.stack);
-});
+
 
 module.exports = { app };

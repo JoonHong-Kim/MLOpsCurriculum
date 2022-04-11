@@ -1,7 +1,13 @@
-const { userRepository } = require("../model/userRepository");
-const user = new userRepository();
+const express = require("express");
 
-module.exports = (app) => {
+module.exports = function (user) {
+  const app = express();
+  app.use(express.urlencoded());
+  app.use(express.json());
+  app.use((err, req, res, next) => {
+    console.log(err);
+    res.status(err.status || 500).send(err.stack);
+  });
   app.get("/", (request, response) => {
     response.json({ status: "OK" });
   });
@@ -12,43 +18,52 @@ module.exports = (app) => {
 
   app.get("/user/:id", async (req, res) => {
     const id = parseInt(req.params.id);
-    if (isNaN(id)) {
-      res.status(400).text("Invalid user id" );
+    if (!Number.isInteger(Number(id))) {
+      res.status(400).send("Invalid user id");
+      return;
     }
     const result = await user.getUserById(id);
+    console.log(result)
     if (result.length === 0) {
-      res.status(404).text("The user not found");
+      res.status(404).send("The user not found");
+      return;
     }
     res.status(200).json(result);
   });
 
   app.post("/user", async (req, res) => {
     const { name, age } = req.body;
-    if (isNaN(name) || isNaN(age)) {
-      res.status(400);
+    if (!Number.isInteger(Number(age))) {
+      res.status(400).send('"age" parameter must be an integer');
+      return;
     }
+    if (name.length === 0) {
+      res.status(400).send('"name" parameter is empty');
+      return;
+    }
+
     const result = await user.createUser(name, age);
-    res.status(201).json({id:result["id"], name:name,age:age});
+    res.status(201).json({ id: result["id"], name: name, age: age });
   });
   app.put("/user/:id", async (req, res) => {
     const id = parseInt(req.params.id);
-    if (isNaN(id)) {
-      res.status(400);
+
+    if (!Number.isInteger(Number(id))) {
+      res.status(400).send("Invalid user id");
+      return;
     }
     const { name, age } = req.body;
-    if (isNaN(name) || isNaN(age)) {
-      res.status(400);
-    }
     const result = await user.updateUser(id, name, age);
-    console.log(result);
-    res.status(200).json({ id: id, name: name, age: age });
+    res.status(200).json(result);
   });
   app.delete("/user/:id", async (req, res) => {
     const id = parseInt(req.params.id);
-    if (isNaN(id)) {
-      res.status(400).text("Invalid user id");
+    if (!Number.isInteger(Number(id))) {
+      res.status(400).send("Invalid user id");
+      return;
     }
     const result = await user.deleteUser(id);
     res.status(200).json(result);
   });
+  return app;
 };
