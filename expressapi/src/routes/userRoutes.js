@@ -34,7 +34,7 @@ module.exports = function (user) {
   app.post("/user", async (req, res) => {
     const { name, age } = req.body;
     if (!Number.isInteger(Number(age))) {
-      res.status(400).send('"age" parameter must be an integer');
+      res.status(400).send('\"age\" parameter must be an integer');
       return;
     }
     if (name.length === 0) {
