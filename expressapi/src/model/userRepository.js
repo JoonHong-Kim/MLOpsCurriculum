@@ -54,7 +54,7 @@ class userRepository {
           if (error) {
             rej(error);
           } else {
-            res(results.rows);
+            res(results.rows[0]);
           }
         }
       );
@@ -63,14 +63,18 @@ class userRepository {
 
   async deleteUser(id) {
     return new Promise((res, rej) => {
-      pool.query("DELETE FROM users WHERE id = $1 RETURNING *", [id], (error, results) => {
-        if (error) {
-          rej(error);
-        } else {
-          console.log(results)
-          res(results.rows[0]);
+      pool.query(
+        "DELETE FROM users WHERE id = $1 RETURNING *",
+        [id],
+        (error, results) => {
+          if (error) {
+            rej(error);
+          } else {
+            console.log(results);
+            res(results.rows[0]);
+          }
         }
-      });
+      );
     });
   }
 }
