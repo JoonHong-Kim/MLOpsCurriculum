@@ -1,6 +1,9 @@
+const { userRepository } = require("../model/userRepository");
+const userRepo=new userRepository();
+
 class UserController {
-  constructor(userRepository) {
-    this.user = userRepository;
+  constructor({userRepo}) {
+    this.user = userRepo;
   }
   async getAllUsers(req, res) {
     this.user.getUsers().then((result) => {
