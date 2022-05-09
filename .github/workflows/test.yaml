@@ -8,10 +8,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "14"
-      - name: set up node
-        working-directory: ./expressapi
-        run: cd expressapi
-      - name: install
-        run: npm install
-      - name: test
-        run: npm test
+      - run: cd expressapi
+      - run: npm install
+      - run: npm test
