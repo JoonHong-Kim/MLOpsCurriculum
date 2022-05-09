@@ -28,7 +28,6 @@ class userRepository {
       );
     });
   }
-
   async createUser(name, age) {
     return new Promise((res, rej) => {
       pool.query(

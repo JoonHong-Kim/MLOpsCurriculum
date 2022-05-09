@@ -1,7 +1,5 @@
 name: unit-test
-on:
-  pull_request:
-    types: [opened, reopened]
+on: [push]
 jobs:
   unit-test-api:
     runs-on: ubuntu-latest
