@@ -8,9 +8,8 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "14"
-      - name: node test
-        run: |
-      cd expressapi
-      npm install --save --legacy-peer-deps
-      npm run build --if-present
-      npm test
+      - run: |
+          cd expressapi
+          npm install --save --legacy-peer-deps
+          npm run build --if-present
+          npm test
