@@ -10,8 +10,9 @@ jobs:
           node-version: "14"
       - name: set up node
         working-directory: ./expressapi
-        run: cp .package.json .
-        run: cp .package-lock.json .
+        run: |
+          cp .package.json .
+          cp .package-lock.json .
       - name: install
         run: npm install
       - name: test
