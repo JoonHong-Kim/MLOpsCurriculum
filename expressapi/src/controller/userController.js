@@ -1,16 +1,13 @@
-const { userRepository } = require("../model/userRepository");
-const userRepo=new userRepository();
-
 class UserController {
   constructor(userRepo) {
     this.user = userRepo;
   }
-  async getAllUsers(req, res) {
+  getAllUsers = async (req, res) => {
     this.user.getUsers().then((result) => {
       res.status(200).json(result);
     });
-  }
-  async getUserById(req, res) {
+  };
+  getUserById = async (req, res) => {
     const id = parseInt(req.params.id);
     if (isNaN(id)) {
       res.status(400).send("Invalid user id");
@@ -23,8 +20,8 @@ class UserController {
       }
       res.status(200).json(result);
     });
-  }
-  async createUser(req, res) {
+  };
+  createUser = async (req, res) => {
     const { name, age } = req.body;
     if (isNaN(age)) {
       res.status(400).send('"age" parameter must be an integer');
@@ -36,8 +33,8 @@ class UserController {
     }
     const result = this.user.createUser(name, age);
     res.status(201).send(result);
-  }
-  async updateUser(req, res) {
+  };
+  updateUser = async (req, res) => {
     const id = parseInt(req.params.id);
     if (isNaN(id)) {
       res.status(400).send("Invalid user id");
@@ -47,8 +44,8 @@ class UserController {
     this.user.updateUser(id, name, age).then((result) => {
       res.status(200).json(result);
     });
-  }
-  async deleteUser(req, res) {
+  };
+  deleteUser = async (req, res) => {
     const id = parseInt(req.params.id);
     if (isNaN(id)) {
       res.status(400).send("Invalid user id");
@@ -57,7 +54,7 @@ class UserController {
     this.user.deleteUser(id).then((result) => {
       res.status(200).json(result);
     });
-  }
+  };
 }
 
 module.exports = { UserController };
