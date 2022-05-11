@@ -8,7 +8,7 @@ name: Deploy to Amazon ECS
 on:
   push:
     branches:
-      - main
+      - feature/github-action
 env:
   AWS_REGION: ap-northeast-2 # set this to your preferred AWS region, e.g. us-west-1
   ECR_REPOSITORY: mlopscurriculum # set this to your Amazon ECR repository name
