@@ -1,7 +1,5 @@
 name: unit-test
-on:
-  pull_request:
-    types: [opened, reopened]
+on: [push]
 jobs:
   unit-test-api:
     runs-on: ubuntu-latest
@@ -10,5 +8,8 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "14"
-      - run: npm install
-      - run: npm test
+      - run: |
+          cd expressapi
+          npm install --save --legacy-peer-deps
+          npm run build --if-present
+          npm test
