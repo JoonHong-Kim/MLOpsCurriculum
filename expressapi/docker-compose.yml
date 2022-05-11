@@ -2,6 +2,7 @@ version: "3.8"
 
 services:
   node:
+    image: 854407906105.dkr.ecr.ap-northeast-2.amazonaws.com/mlopscurriculum:jh-node
     build:
       context: ./
       dockerfile: Dockerfile
@@ -22,4 +23,3 @@ services:
     ports:
       - "${DB_PORT}:${DB_PORT}"
     command: -p ${DB_PORT}
-
