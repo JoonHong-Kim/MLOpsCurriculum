@@ -14,6 +14,7 @@ env:
   ECR_REPOSITORY: mlopscurriculum # set this to your Amazon ECR repository name
   ECS_SERVICE: expressapi-NodeService-74OgmwJ16BGm # set this to your Amazon ECS service name
   ECS_CLUSTER: expressapi # set this to your Amazon ECS cluster name
+  
   ECS_TASK_DEFINITION:
     task-definition.json # set this to the path to your Amazon ECS task definition
     # file, e.g. .aws/task-definition.json
@@ -54,9 +55,9 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-      - name: Download task definition
-        run: |
-          aws ecs describe-task-definition --task-definition ${{ env.ECS_TASK }} --query taskDefinition > ${{ env.ECS_TASK_DEFINITION }}
+      # - name: Download task definition
+      #   run: |
+      #     aws ecs describe-task-definition --task-definition ${{ env.ECS_TASK }} --query taskDefinition > ${{ env.ECS_TASK_DEFINITION }}
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
