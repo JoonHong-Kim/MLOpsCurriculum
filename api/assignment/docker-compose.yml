@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  node:
+    image: '${ECR_NODE}'
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - '${PORT}:${PORT}'
+    env_file:
+      - .env
+    restart: always
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: '${DB_USER}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD}'
+      POSTGRES_DB: '${DB_NAME}'
+      POSTGRES_HOST: '${DB_HOST}'
+      POSTGRES_PORT: '${DB_PORT}'
+    ports:
+      - '${DB_PORT}:${DB_PORT}'
+    command: -p ${DB_PORT}
