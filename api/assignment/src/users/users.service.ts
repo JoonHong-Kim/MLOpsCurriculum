@@ -18,6 +18,14 @@ export class UsersService {
         HttpStatus.CONFLICT,
       );
     }
+    // check age can convert to number
+    const age = +createUserDto.age;
+    if (typeof age !== 'number') {
+      throw new HttpException(
+        '"age" parameter must be a integer.',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     const user = {
       id: this.lastId++,
       ...createUserDto,
